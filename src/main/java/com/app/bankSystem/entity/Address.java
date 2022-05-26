@@ -7,11 +7,10 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"countryCode","city","street","building","home","zip"}))
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Enumerated(EnumType.STRING)
     private CountryCode countryCode;
     private String city;
