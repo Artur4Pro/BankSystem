@@ -1,7 +1,7 @@
 package com.app.bankSystem.service;
 
 import com.app.bankSystem.entity.Account;
-import com.app.bankSystem.entity.IBAN;
+import com.app.bankSystem.util.IBANGenerator;
 import com.app.bankSystem.repo.AccountRepo;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class AccountService {
     }
 
     public void createAccount(Account account) {
-        account.setIban(IBAN.ibanGenerator(account.getIssuer()));
+        account.setIban(IBANGenerator.ibanGenerator(account.getIssuer()));
         accountRepo.save(account);
     }
 
@@ -26,7 +26,7 @@ public class AccountService {
         Account find = accountRepo.findById(id).get();
         find.setAccountBalance(account.getAccountBalance());
         find.setIssuer(account.getIssuer());
-        find.setIban(IBAN.ibanGenerator(account.getIssuer()));
+        find.setIban(IBANGenerator.ibanGenerator(account.getIssuer()));
         accountRepo.save(find);
     }
 

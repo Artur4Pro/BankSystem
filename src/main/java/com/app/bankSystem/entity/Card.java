@@ -24,6 +24,7 @@ public class Card {
     private String cardNumber;
     private Date expirationDate;
     private String cvcCode;
+    @JsonIgnore
     private String pin;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Issuer issuer;

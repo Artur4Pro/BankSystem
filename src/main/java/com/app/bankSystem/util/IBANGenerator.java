@@ -1,6 +1,8 @@
-package com.app.bankSystem.entity;
+package com.app.bankSystem.util;
 
-public class IBAN {
+import com.app.bankSystem.entity.Issuer;
+
+public class IBANGenerator {
     public static String ibanGenerator(Issuer issuer) {
         return String.valueOf(issuer.getAddress().getCountryCode() + issuer.getBankCode() + issuer.getBranchCode());
     }
