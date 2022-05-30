@@ -3,6 +3,10 @@ package com.app.bankSystem.entity;
 import com.app.bankSystem.enam.CardBalanceType;
 import com.app.bankSystem.enam.CardStatusType;
 import com.app.bankSystem.enam.CardType;
+import com.app.bankSystem.util.CardNumberGenerator;
+import com.app.bankSystem.util.CvcCodeGenerator;
+import com.app.bankSystem.util.ExpirationDateGenerator;
+import com.app.bankSystem.util.PinGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,7 +23,7 @@ public class Card {
     @Enumerated(EnumType.ORDINAL)
     private CardBalanceType cardBalanceType;
     @Enumerated(EnumType.ORDINAL)
-    private CardStatusType cardStatusType = CardStatusType.CREATED;
+    private CardStatusType cardStatusType;
     private long balance;
     private String cardNumber;
     private Date expirationDate;
@@ -35,16 +39,14 @@ public class Card {
     public Card() {
     }
 
-    public Card(CardType cardType, CardBalanceType cardBalanceType, Issuer issuer, long balance, String cardNumber, Date expirationDate, String cvcCode, String pin) {
+    public Card(CardType cardType, CardBalanceType cardBalanceType, Issuer issuer, long balance) {
         this.cardType = cardType;
         this.cardBalanceType = cardBalanceType;
         this.issuer = issuer;
         this.balance = balance;
-        this.cardNumber = cardNumber;
-        this.expirationDate = expirationDate;
-        this.cvcCode = cvcCode;
-        this.pin = pin;
+        this.cardStatusType = CardStatusType.CREATED;
     }
+
 
     public CardType getCardType() {
         return cardType;
@@ -90,24 +92,12 @@ public class Card {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
     public String getCvcCode() {
         return cvcCode;
     }
 
-    public void setCvcCode(String cvcCode) {
-        this.cvcCode = cvcCode;
-    }
-
     public String getPin() {
         return pin;
-    }
-
-    public void setPin(String pin) {
-        this.pin = pin;
     }
 
     public void setIssuer(Issuer issuer) {
@@ -125,6 +115,18 @@ public class Card {
 
     public void setCardHolder(CardHolder cardHolder) {
         this.cardHolder = cardHolder;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public void setCvcCode(String cvcCode) {
+        this.cvcCode = cvcCode;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     @Override

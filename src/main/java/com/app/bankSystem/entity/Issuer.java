@@ -20,16 +20,16 @@ public class Issuer {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
 
-    @OneToMany(mappedBy = "issuer",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issuer", cascade = CascadeType.ALL)
     private Set<Card> cards;
 
-    @OneToMany(mappedBy = "issuer",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issuer", cascade = CascadeType.ALL)
     private Set<Account> accounts;
 
     public Issuer() {
     }
 
-    public Issuer(String bankName, String bankCode, BankType bankType, String branchCode , Address address) {
+    public Issuer(String bankName, String bankCode, BankType bankType, String branchCode, Address address) {
         this.bankName = bankName;
         this.bankCode = bankCode;
         this.bankType = bankType;
@@ -77,8 +77,6 @@ public class Issuer {
     public void setBranchCode(String branchCode) {
         this.branchCode = branchCode;
     }
-
-
 
 
     @Override

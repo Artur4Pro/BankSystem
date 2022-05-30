@@ -3,23 +3,30 @@ package com.app.bankSystem.service;
 import com.app.bankSystem.enam.CardStatusType;
 import com.app.bankSystem.entity.Card;
 import com.app.bankSystem.repo.CardRepo;
-import com.app.bankSystem.util.CvcCodeGenerator;
-import com.app.bankSystem.util.ExpirationDateGenerator;
-import com.app.bankSystem.util.PinGenerator;
+import com.app.bankSystem.util.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CardService {
     private CardRepo cardRepo;
+    private CardNumberGenerator cardNumberGenerator;
+    private CvcCodeGenerator cvcCodeGenerator;
+    private ExpirationDateGenerator expirationDateGenerator;
+    private PinGenerator pinGenerator;
 
-    CardService(CardRepo cardRepo){
-        this.cardRepo=cardRepo;
+    CardService(CardRepo cardRepo, CardNumberGenerator cardNumberGenerator, CvcCodeGenerator cvcCodeGenerator, ExpirationDateGenerator expirationDateGenerator, PinGenerator pinGenerator) {
+        this.cardRepo = cardRepo;
+        this.cardNumberGenerator = cardNumberGenerator;
+        this.cvcCodeGenerator = cvcCodeGenerator;
+        this.expirationDateGenerator = expirationDateGenerator;
+        this.pinGenerator = pinGenerator;
     }
 
     public void createCard(Card card) {
-        card.setPin(PinGenerator.encodedString());
-        card.setExpirationDate(ExpirationDateGenerator.expirationDateGenerator());
-        card.setCvcCode(CvcCodeGenerator.cvcCodeGenerator());
+        card.setCardNumber(cardNumberGenerator.cardNumberGenerator(card, card.getIssuer()));
+        card.setCvcCode(cvcCodeGenerator.cvcCodeGenerator());
+        card.setExpirationDate(expirationDateGenerator.expirationDateGenerator());
+        card.setPin(pinGenerator.encodedString());
         cardRepo.save(card);
     }
 

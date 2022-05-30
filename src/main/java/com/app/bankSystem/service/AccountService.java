@@ -8,13 +8,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountService {
     private AccountRepo accountRepo;
+    private IBANGenerator ibanGenerator;
 
-    AccountService(AccountRepo accountRepo) {
+    AccountService(AccountRepo accountRepo,IBANGenerator ibanGenerator) {
         this.accountRepo = accountRepo;
+        this.ibanGenerator=ibanGenerator;
     }
 
     public void createAccount(Account account) {
-        account.setIban(IBANGenerator.ibanGenerator(account.getIssuer()));
+        account.setIban(ibanGenerator.ibanGenerator(account.getIssuer()));
         accountRepo.save(account);
     }
 
@@ -26,7 +28,7 @@ public class AccountService {
         Account find = accountRepo.findById(id).get();
         find.setAccountBalance(account.getAccountBalance());
         find.setIssuer(account.getIssuer());
-        find.setIban(IBANGenerator.ibanGenerator(account.getIssuer()));
+        find.setIban(ibanGenerator.ibanGenerator(account.getIssuer()));
         accountRepo.save(find);
     }
 

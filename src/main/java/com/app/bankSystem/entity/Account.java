@@ -1,5 +1,7 @@
 package com.app.bankSystem.entity;
 
+import com.app.bankSystem.util.IBANGenerator;
+
 import javax.persistence.*;
 import java.util.Objects;
 
