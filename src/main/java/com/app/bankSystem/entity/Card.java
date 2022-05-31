@@ -25,7 +25,9 @@ public class Card {
     @Enumerated(EnumType.ORDINAL)
     private CardStatusType cardStatusType;
     private long balance;
+    @Column(unique = true)
     private String cardNumber;
+
     private Date expirationDate;
     private String cvcCode;
     @JsonIgnore
@@ -44,7 +46,6 @@ public class Card {
         this.cardBalanceType = cardBalanceType;
         this.issuer = issuer;
         this.balance = balance;
-        this.cardStatusType = CardStatusType.CREATED;
     }
 
 
