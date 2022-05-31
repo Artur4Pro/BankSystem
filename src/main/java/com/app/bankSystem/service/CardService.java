@@ -36,10 +36,17 @@ public class CardService {
 
     public void createCard(Card card) {
         Issuer issuer = issuerRepo.findIssuerByBankNameAndBankCodeAndBranchCode(card.getIssuer().getBankName(), card.getIssuer().getBankCode(), card.getIssuer().getBranchCode());
-        if (issuer!=null){
+        if (issuer != null) {
             card.setIssuer(issuer);
         }
-        card.setCardNumber(cardNumberGenerator.cardNumberGenerator(card, card.getIssuer()));
+
+        String cardNumber = cardNumberGenerator.cardNumberGenerator(card, card.getIssuer());
+        Card card1 = cardRepo.findCardByCardNumber(cardNumber);
+        while (card1 != null) {
+            cardNumber = cardNumberGenerator.cardNumberGenerator(card, card.getIssuer());
+        }
+        card.setCardNumber(cardNumber);
+
         card.setCvcCode(cvcCodeGenerator.cvcCodeGenerator());
         card.setExpirationDate(expirationDateGenerator.expirationDateGenerator());
         card.setPin(pinGenerator.encodedString());

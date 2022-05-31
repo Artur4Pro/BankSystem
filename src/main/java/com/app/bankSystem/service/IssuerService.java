@@ -2,15 +2,13 @@ package com.app.bankSystem.service;
 
 import com.app.bankSystem.entity.Issuer;
 import com.app.bankSystem.repo.IssuerRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class IssuerService {
+    @Autowired
     private IssuerRepo issuerRepo;
-
-    IssuerService(IssuerRepo issuerRepo) {
-        this.issuerRepo = issuerRepo;
-    }
 
     public void createIssuer(Issuer issuer) {
         issuerRepo.save(issuer);

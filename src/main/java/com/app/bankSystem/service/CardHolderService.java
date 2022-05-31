@@ -1,6 +1,10 @@
 package com.app.bankSystem.service;
 
+import com.app.bankSystem.entity.Account;
+import com.app.bankSystem.entity.Address;
 import com.app.bankSystem.entity.CardHolder;
+import com.app.bankSystem.repo.AccountRepo;
+import com.app.bankSystem.repo.AddressRepo;
 import com.app.bankSystem.repo.CardHolderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +13,19 @@ import org.springframework.stereotype.Service;
 public class CardHolderService {
     @Autowired
     CardHolderRepo cardHolderRepo;
+    @Autowired
+    AddressRepo addressRepo;
+    @Autowired
+    AccountRepo accountRepo;
 
     public void createCardHolder(CardHolder cardHolder) {
+        Address address = addressRepo.findAddressByCountryCodeAndCityAndStreetAndBuildingAndHomeAndZip(
+                cardHolder.getAddress().getCountryCode(), cardHolder.getAddress().getCity(),
+                cardHolder.getAddress().getStreet(), cardHolder.getAddress().getBuilding(),
+                cardHolder.getAddress().getHome(), cardHolder.getAddress().getZip());
+        if (address!=null){
+            cardHolder.setAddress(address);
+        }
         cardHolderRepo.save(cardHolder);
     }
 
@@ -33,6 +48,7 @@ public class CardHolderService {
     }
 
     public void transferToCard(Long amount, String fromCardNumber, String toCardNumber) {
+
     }
 
     public void transferToAccount(Long amount, String fromCardNumber, String IBAN) {

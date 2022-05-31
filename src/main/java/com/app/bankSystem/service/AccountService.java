@@ -3,17 +3,15 @@ package com.app.bankSystem.service;
 import com.app.bankSystem.entity.Account;
 import com.app.bankSystem.util.IBANGenerator;
 import com.app.bankSystem.repo.AccountRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService {
+    @Autowired
     private AccountRepo accountRepo;
+    @Autowired
     private IBANGenerator ibanGenerator;
-
-    AccountService(AccountRepo accountRepo,IBANGenerator ibanGenerator) {
-        this.accountRepo = accountRepo;
-        this.ibanGenerator=ibanGenerator;
-    }
 
     public void createAccount(Account account) {
         account.setIban(ibanGenerator.ibanGenerator(account.getIssuer()));
